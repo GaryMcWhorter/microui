@@ -1003,8 +1003,7 @@ void mu_end_treenode(mu_Context *ctx) {
       /* handle input */                                                    \
       mu_update_control(ctx, id, base, 0);                                  \
       if (ctx->focus == id && ctx->mouse_down == MU_MOUSE_LEFT) {           \
-        cnt->scroll.y += ctx->mouse_delta.y;                \
-        // cnt->scroll.y += ctx->mouse_delta.y * cs.y / base.h;                \
+        cnt->scroll.y += ctx->mouse_delta.y;                                \
       }                                                                     \
       /* clamp scroll to limits */                                          \
       cnt->scroll.y = mu_clamp(cnt->scroll.y, 0, maxscroll);                \
