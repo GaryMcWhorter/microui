@@ -1007,7 +1007,7 @@ void mu_end_treenode(mu_Context *ctx) {
       mu_update_control(ctx, id, base, 0);                                  \
       if (ctx->focus == id && ctx->mouse_down == MU_MOUSE_LEFT) {           \
           float scroll_factor = (float)(cs.y - b->h) / (float)(base.h - thumb.h); \
-          cnt->scroll.y += (int)(ctx->mouse_delta.y * scroll_factor) * 1.5f;       \
+          cnt->scroll.y += (int)(ctx->mouse_delta.y * scroll_factor);       \
       }                                                                     \
       /* clamp scroll to limits */                                          \
       cnt->scroll.y = mu_clamp(cnt->scroll.y, 0, maxscroll);                \
@@ -1032,8 +1032,10 @@ static void scrollbars(mu_Context *ctx, mu_Container *cnt, mu_Rect *body) {
   cs.y += ctx->style->padding * 2;
   mu_push_clip_rect(ctx, *body);
   /* resize body to make room for scrollbars */
-  if (cs.y > cnt->body.h) { body->w -= sz; }
-  if (cs.x > cnt->body.w) { body->h -= sz; }
+  // if (cs.y > cnt->body.h) { body->w -= sz; }
+  // if (cs.x > cnt->body.w) { body->h -= sz; }
+  body->w -= sz;
+  body->h -= sz;
   /* to create a horizontal or vertical scrollbar almost-identical code is
   ** used; only the references to `x|y` `w|h` need to be switched */
   scrollbar(ctx, cnt, body, cs, x, y, w, h);
