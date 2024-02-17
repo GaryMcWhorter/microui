@@ -999,23 +999,21 @@ void mu_end_treenode(mu_Context *ctx) {
       base = *b;                                                            \
       base.x = b->x + b->w;                                                 \
       base.w = ctx->style->scrollbar_size;                                  \
+      thumb = base;                                                         \
+      thumb.h = mu_max(ctx->style->thumb_size, base.h * b->h / cs.y);       \
+      thumb.y += cnt->scroll.y * (base.h - thumb.h) / maxscroll;            \
                                                                             \
       /* handle input */                                                    \
       mu_update_control(ctx, id, base, 0);                                  \
       if (ctx->focus == id && ctx->mouse_down == MU_MOUSE_LEFT) {           \
-        float thumb_movement = (float)ctx->mouse_delta.y;                \
-        float scroll_range = (float)(cs.y - b->h); \
-        float thumb_pos_ratio = (cnt->scroll.y + thumb_movement * scroll_range / (base.h - thumb.h)) / scroll_range; \
-        cnt->scroll.y = (int)(thumb_pos_ratio * scroll_range);                        \
+          float scroll_factor = (float)(cs.y - b->h) / (float)(base.h - thumb.h); \
+          cnt->scroll.y += (int)(ctx->mouse_delta.y * scroll_factor);       \
       }                                                                     \
       /* clamp scroll to limits */                                          \
       cnt->scroll.y = mu_clamp(cnt->scroll.y, 0, maxscroll);                \
                                                                             \
       /* draw base and thumb */                                             \
       ctx->draw_frame(ctx, base, MU_COLOR_SCROLLBASE);                      \
-      thumb = base;                                                         \
-      thumb.h = mu_max(ctx->style->thumb_size, base.h * b->h / cs.y);       \
-      thumb.y += cnt->scroll.y * (base.h - thumb.h) / maxscroll;            \
       ctx->draw_frame(ctx, thumb, MU_COLOR_SCROLLTHUMB);                    \
                                                                             \
       /* set this as the scroll_target (will get scrolled on mousewheel) */ \
