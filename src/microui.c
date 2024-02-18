@@ -474,6 +474,38 @@ void mu_draw_rect(mu_Context *ctx, mu_Rect rect, mu_Color color) {
   }
 }
 
+void mu_draw_rounded_rect(mu_Context *ctx, mu_Rect rect, float roundness, mu_Color color) {
+  mu_Command *cmd;
+  rect = intersect_rects(rect, mu_get_clip_rect(ctx));
+  if (rect.w > 0 && rect.h > 0) {
+    cmd = mu_push_command(ctx, MU_COMMAND_ROUNDED_RECT, sizeof(mu_RoundedRectCommand));
+    cmd->rounded.rect = rect;
+    cmd->rounded.roundness = roundness;
+    cmd->rounded.color = color;
+  }
+}
+
+void mu_draw_nine_patch(mu_Context *ctx, mu_Rect rect, mu_Color color) {
+  mu_Command *cmd;
+  rect = intersect_rects(rect, mu_get_clip_rect(ctx));
+  if (rect.w > 0 && rect.h > 0) {
+    cmd = mu_push_command(ctx, MU_COMMAND_NINE_PATCH, sizeof(mu_NinePatchCommand));
+    cmd->npatch.rect = rect;
+    cmd->npatch.color = color;
+  }
+}
+
+void mu_draw_shadow(mu_Context *ctx, mu_Rect rect, mu_Vec2 offset, float spread, mu_Color color) {
+  mu_Command *cmd;
+  rect = intersect_rects(rect, mu_get_clip_rect(ctx));
+  if (rect.w > 0 && rect.h > 0) {
+    cmd = mu_push_command(ctx, MU_COMMAND_SHADOW, sizeof(mu_ShadowCommand));
+    cmd->shadow.rect = rect;
+    cmd->shadow.offset = offset;
+    cmd->shadow.spread = spread;
+    cmd->shadow.color = color;
+  }
+}
 
 void mu_draw_box(mu_Context *ctx, mu_Rect rect, mu_Color color) {
   mu_draw_rect(ctx, mu_rect(rect.x + 1, rect.y, rect.w - 2, 1), color);
