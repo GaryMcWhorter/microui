@@ -126,7 +126,7 @@ typedef struct { mu_BaseCommand base; mu_Rect rect; mu_Color color; } mu_RectCom
 typedef struct { mu_BaseCommand base; mu_Font font; mu_Vec2 pos; mu_Color color; char str[1]; } mu_TextCommand;
 typedef struct { mu_BaseCommand base; mu_Rect rect; int id; mu_Color color; } mu_IconCommand;
 typedef struct { mu_BaseCommand base; mu_Rect rect; float roundness; mu_Color color; } mu_RoundedRectCommand;
-typedef struct { mu_BaseCommand base; mu_Rect rect; mu_Color color; } mu_NinePatchCommand;
+typedef struct { mu_BaseCommand base; mu_Rect rect; int type; mu_Color color; } mu_NinePatchCommand;
 typedef struct { mu_BaseCommand base; mu_Rect rect; mu_Vec2 offset; float spread; mu_Color color; } mu_ShadowCommand;
 
 
@@ -259,7 +259,7 @@ int mu_next_command(mu_Context *ctx, mu_Command **cmd);
 void mu_set_clip(mu_Context *ctx, mu_Rect rect);
 void mu_draw_rect(mu_Context *ctx, mu_Rect rect, mu_Color color);
 void mu_draw_rounded_rect(mu_Context *ctx, mu_Rect rect, float roundness, mu_Color color);
-void mu_draw_nine_patch(mu_Context *ctx, mu_Rect rect, mu_Color color);
+void mu_draw_nine_patch(mu_Context *ctx, mu_Rect rect, int type, mu_Color color);
 void mu_draw_shadow(mu_Context *ctx, mu_Rect rect, mu_Vec2 offset, float spread, mu_Color color);
 void mu_draw_box(mu_Context *ctx, mu_Rect rect, mu_Color color);
 void mu_draw_text(mu_Context *ctx, mu_Font font, const char *str, int len, mu_Vec2 pos, mu_Color color);
