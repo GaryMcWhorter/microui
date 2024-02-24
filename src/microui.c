@@ -498,7 +498,7 @@ void mu_draw_nine_patch(mu_Context *ctx, mu_Rect rect, int type, mu_Color color)
 
 void mu_draw_shadow(mu_Context *ctx, mu_Rect rect, mu_Vec2 offset, float spread, mu_Color color) {
   mu_Command *cmd;
-  rect = intersect_rects(rect, mu_get_clip_rect(ctx));
+  // rect = intersect_rects(rect, mu_get_clip_rect(ctx));
   if (rect.w > 0 && rect.h > 0) {
     cmd = mu_push_command(ctx, MU_COMMAND_SHADOW, sizeof(mu_ShadowCommand));
     cmd->shadow.rect = rect;
